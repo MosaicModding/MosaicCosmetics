@@ -7,6 +7,16 @@ plugins {
 
 version = "${minecraft_version}-${mod_version}-fabric"
 
+repositories {
+    maven {
+        name = "Modmuss"
+        url = "https://maven.modmuss50.me/"
+        content {
+            includeGroup "me.zeroeightsix"
+        }
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered() {
@@ -17,6 +27,9 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     compileOnly project(":Xplat")
+
+    modImplementation "me.zeroeightsix:fiber:0.23.0-2"
+    include "me.zeroeightsix:fiber:0.23.0-2"
 }
 
 loom {

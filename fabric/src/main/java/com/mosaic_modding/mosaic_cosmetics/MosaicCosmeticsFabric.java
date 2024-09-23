@@ -7,5 +7,6 @@ public class MosaicCosmeticsFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         MosaicCosmetics.init();
+        ModFiberConfig.setup();
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,7 +25,7 @@ public class PlayerRendererMixin {
     public void mosaic_moddingAddCapes(AbstractClientPlayer player, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
         UUID uuid = player.getGameProfile().getId();
 
-        if (Definitions.DEV_UUIDS.contains(uuid) || MosaicCosmetics.ACCESS.isDevEnvironment()) { //TODO add config & contributor check
+        if ((mosaicCosmetics$contributorCheck(uuid) || Definitions.DEV_UUIDS.contains(uuid) || MosaicCosmetics.ACCESS.isDevEnvironment()) && MosaicCosmetics.configAccess.renderContributorCape()) {
             ResourceLocation cape = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
             PlayerInfo info = player.playerInfo;
             if (info != null) {
@@ -35,5 +36,22 @@ public class PlayerRendererMixin {
                 }
             }
         }
+    }
+
+    @Unique
+    public boolean mosaicCosmetics$contributorCheck(UUID uuid) {
+        for (Map<String, UUID> df : Definitions.CONTRIBUTORS) {
+            for (UUID uuid1 : df.values()) {
+                if (uuid1.equals(uuid)) {
+                    for (String modId : df.keySet()) {
+                        if (MosaicCosmetics.ACCESS.isModLoaded(modId)) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
     }
 }
