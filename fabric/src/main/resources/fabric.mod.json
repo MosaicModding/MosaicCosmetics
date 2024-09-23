@@ -8,8 +8,8 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "sources": "https://github.com/MosaicModding/MosaicCosmetics",
+        "issues": "https://github.com/MosaicModding/MosaicCosmetics/issues"
     },
     "license": "${license}",
     "icon": "assets/modid/${mod_id}.png",
@@ -22,6 +22,7 @@
     "mixins": [
         "${mod_id}.mixins.json"
     ],
+    "accessWidener" : "mosaic_cosmetics.accesswidener",
     "depends": {
         "fabricloader": ">=0.14",
         "fabric": "*",
