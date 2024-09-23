@@ -15,17 +15,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Mixin(PlayerRenderer.class)
 public class PlayerRendererMixin {
+    @Unique
+    private static final Set<String> mosaicCosmetics$finishedPlayers = Collections.newSetFromMap(new WeakHashMap<>());
 
     @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("TAIL"))
     public void mosaic_moddingAddCapes(AbstractClientPlayer player, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
-        UUID uuid = player.getGameProfile().getId();
+        String uuid = player.getGameProfile().getId().toString();
 
-        if ((mosaicCosmetics$contributorCheck(uuid) || Definitions.DEV_UUIDS.contains(uuid) || MosaicCosmetics.ACCESS.isDevEnvironment()) && MosaicCosmetics.configAccess.renderContributorCape()) {
+        if (mosaicCosmetics$finishedPlayers.contains(uuid)) return;
+
+        if ((mosaicCosmetics$contributorCheck(uuid) || Definitions.DEV_UUIDS.contains(uuid)) && MosaicCosmetics.configAccess.renderContributorCape()) {
             ResourceLocation cape = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
             PlayerInfo info = player.playerInfo;
             if (info != null) {
@@ -33,15 +36,16 @@ public class PlayerRendererMixin {
                     Map<MinecraftProfileTexture.Type, ResourceLocation> playerTextures = info.textureLocations;
                     playerTextures.put(MinecraftProfileTexture.Type.CAPE, cape);
                     playerTextures.put(MinecraftProfileTexture.Type.ELYTRA, cape);
+                    mosaicCosmetics$finishedPlayers.add(uuid);
                 }
             }
         }
     }
 
     @Unique
-    public boolean mosaicCosmetics$contributorCheck(UUID uuid) {
-        for (Map<String, UUID> df : Definitions.CONTRIBUTORS) {
-            for (UUID uuid1 : df.values()) {
+    public boolean mosaicCosmetics$contributorCheck(String uuid) {
+        for (Map<String, String> df : Definitions.CONTRIBUTORS) {
+            for (String uuid1 : df.values()) {
                 if (uuid1.equals(uuid)) {
                     for (String modId : df.keySet()) {
                         if (MosaicCosmetics.ACCESS.isModLoaded(modId)) {
