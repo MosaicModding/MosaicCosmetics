@@ -44,12 +44,14 @@ public class PlayerRendererMixin {
 
     @Unique
     public boolean mosaicCosmetics$contributorCheck(String uuid) {
-        for (Map<String, String> df : Definitions.CONTRIBUTORS) {
+        for (Map<List<String>, String> df : Definitions.CONTRIBUTORS) {
             for (String uuid1 : df.values()) {
                 if (uuid1.equals(uuid)) {
-                    for (String modId : df.keySet()) {
-                        if (MosaicCosmetics.ACCESS.isModLoaded(modId)) {
-                            return true;
+                    for (List<String> modIds : df.keySet()) {
+                        for (String id : modIds) {
+                            if (MosaicCosmetics.ACCESS.isModLoaded(id)) {
+                                return true;
+                            }
                         }
                     }
                 }
