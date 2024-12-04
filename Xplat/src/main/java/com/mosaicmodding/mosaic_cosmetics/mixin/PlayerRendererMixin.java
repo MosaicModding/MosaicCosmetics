@@ -1,9 +1,9 @@
-package com.mosaic_modding.mosaic_cosmetics.mixin;
+package com.mosaicmodding.mosaic_cosmetics.mixin;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mosaic_modding.mosaic_cosmetics.Definitions;
-import com.mosaic_modding.mosaic_cosmetics.MosaicCosmetics;
+import com.mosaicmodding.mosaic_cosmetics.Definitions;
+import com.mosaicmodding.mosaic_cosmetics.MosaicCosmetics;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -23,7 +23,7 @@ public class PlayerRendererMixin {
     private static final Set<String> mosaicCosmetics$finishedPlayers = Collections.newSetFromMap(new WeakHashMap<>());
 
     @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("TAIL"))
-    public void mosaic_moddingAddCapes(AbstractClientPlayer player, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
+    public void mosaicCosmetics$addCapes(AbstractClientPlayer player, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
         String uuid = player.getGameProfile().getId().toString();
 
         if (mosaicCosmetics$finishedPlayers.contains(uuid)) return;

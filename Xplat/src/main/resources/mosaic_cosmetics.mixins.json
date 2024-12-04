@@ -1,7 +1,7 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "com.mosaic_modding.mosaic_cosmetics.mixin",
+    "package": "com.mosaicmodding.mosaic_cosmetics.mixin",
     "refmap": "${mod_id}.refmap.json",
     "compatibilityLevel": "JAVA_17",
     "mixins": [

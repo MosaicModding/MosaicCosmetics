@@ -1,4 +1,4 @@
-package com.mosaic_modding.mosaic_cosmetics;
+package com.mosaicmodding.mosaic_cosmetics;
 
 import io.github.fablabsmc.fablabs.api.fiber.v1.builder.ConfigTreeBuilder;
 import io.github.fablabsmc.fablabs.api.fiber.v1.exception.ValueDeserializationException;

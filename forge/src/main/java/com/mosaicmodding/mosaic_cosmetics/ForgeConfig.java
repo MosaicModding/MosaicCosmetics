@@ -1,4 +1,4 @@
-package com.mosaic_modding.mosaic_cosmetics;
+package com.mosaicmodding.mosaic_cosmetics;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
