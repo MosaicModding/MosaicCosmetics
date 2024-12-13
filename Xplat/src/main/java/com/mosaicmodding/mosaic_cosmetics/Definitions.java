@@ -25,7 +25,7 @@ public class Definitions {
             Map.of(List.of("painters_inc"), "50dead25-46c1-4dd4-8f63-f8403716fcb9"), //8onfire
             Map.of(List.of("painters_inc"), "9778ff53-d83d-4233-8fa6-8aab7b89c4c0"), //Artbeet
             Map.of(List.of("painters_inc"), "73132c10-94af-45a8-b8f1-d4bbcc4e3dc1"), //solairades/silverboy
-            Map.of(List.of("painters_inc"), "?"), //FishStacks
+            Map.of(List.of("painters_inc"), "c0678788-c88a-43b5-93d2-985dfaf45da3"), //FishStacks
             Map.of(List.of("painters_inc"), "d2c56994-2453-4603-a4ac-149f4bd2ef53"), //edmord
             Map.of(List.of("painters_inc"), "f5892d33-47d7-488e-a10b-83322b6dab1c"), //monozari
             Map.of(List.of("painters_inc"), "3ff497ed-71f0-453a-a869-4fc17be298ff"), //Yapetto
@@ -34,7 +34,7 @@ public class Definitions {
             Map.of(List.of("painters_inc"), "4c544c23-8ca9-43ac-9676-352c5c3360af"), //Jolene
             Map.of(List.of("painters_inc"), "ad07a45a-1c53-4b4b-8311-477d72926288"), //SirBaconFace
             Map.of(List.of("painters_inc"), "277a737a-46c2-4bcc-aea9-7016215c6ef1"), //CodenamedSuper
-            Map.of(List.of("painters_inc"), "?"), //Dead Comedian
+            Map.of(List.of("painters_inc"), "3186d0b6-8633-46a1-a429-603d4f0ffe7a"), //Dead Comedian
             Map.of(List.of("painters_inc"), "529ac84b-3289-41e9-a83c-af903fd8f937"), //JadenXgamer
             Map.of(List.of("painters_inc"), "1cedf927-5c8f-4650-95e9-808fc8f94d00"), //Yirmiri
             Map.of(List.of("painters_inc"), "b94fb95a-3589-44df-b1c3-7937456b4bd0"), //cf28
