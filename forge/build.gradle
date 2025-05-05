@@ -90,7 +90,8 @@ jar.finalizedBy('reobfJar')
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId base.archivesName.get() + "-" + project.minecraft_version
+            artifactId base.archivesName.get() + "-" + project.minecraft_version + "-forge"
+            version project.mod_version
             artifact tasks.jar
         }
     }
