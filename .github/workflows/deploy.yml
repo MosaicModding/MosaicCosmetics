@@ -1,5 +1,7 @@
 name: Deploy to Maven
 
+# to automate this further we could later automatically increase the mod version perhaps
+
 on:
   workflow_dispatch:
 

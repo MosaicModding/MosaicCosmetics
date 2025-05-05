@@ -60,13 +60,22 @@ processResources {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId base.archivesName.get()
-            from components.java
+            artifactId base.archivesName.get() + "-" + project.minecraft_version
+            artifact tasks.jar
         }
     }
     repositories {
         maven {
-            url "file://" + System.getenv("local_maven")
+            name = "Mosaic-Modding-Maven"
+            url = "https://maven.mosaicmodding.com"
+
+            credentials(HttpHeaderCredentials) {
+                name = "X-Custom-Auth-Key"
+                value = System.getenv("AUTH_KEY_SECRET")
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
         }
     }
 }

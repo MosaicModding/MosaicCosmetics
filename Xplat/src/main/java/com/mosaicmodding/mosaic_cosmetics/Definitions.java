@@ -13,6 +13,7 @@ public class Definitions {
     );
     public static final Set<Map<List<String>, String>> CONTRIBUTORS = Set.of(
             Map.of(List.of("sullysmod"), "a69fc0f5-028a-4bee-9102-26ff3764017e"), //Sully alt
+            Map.of(List.of("sullysmod", "painters_inc"), "456e2ae6-74b3-474a-9560-92b782bce747"), //Graus
             Map.of(List.of("sullysmod"), "2d173722-de6b-4bb8-b21b-b2843cfe395d"), //Ninni
             Map.of(List.of("sullysmod", "painters_inc"), "7d43a0a0-f228-4382-9d0e-24b96f92ce39"), //Shable
             Map.of(List.of("sullysmod", "painters_inc"), "b2e40db2-5aa8-435a-9c30-8f79efffaba6"), //Angery
