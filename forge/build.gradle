@@ -97,7 +97,16 @@ publishing {
     }
     repositories {
         maven {
-            url "file://" + System.getenv("local_maven")
+            name = "CloudflareR2"
+            url = "https://mosaicmodding-maven.juliusabels.workers.dev"
+
+            credentials(HttpHeaderCredentials) {
+                name = "X-Custom-Auth-Key"
+                value = System.getenv("AUTH_KEY_SECRET")
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
         }
     }
 }
