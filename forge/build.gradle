@@ -6,7 +6,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle'
 }
 
-version = "${minecraft_version}-${mod_version}-forge"
+version = "${minecraft_version}+${mod_version}-forge"
 
 mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
@@ -76,10 +76,12 @@ dependencies {
 compileJava {
     source(project(":Xplat").sourceSets.main.allSource)
 }
-
+/*
 tasks.named("sourcesJar", Jar) {
     from(project(":Xplat").sourceSets.main.allSource)
 }
+
+ */
 
 processResources {
     from project(":Xplat").sourceSets.main.resources
