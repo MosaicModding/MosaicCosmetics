@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare R2 Maven
+name: Deploy to Maven
 
 on:
   workflow_dispatch:
@@ -11,6 +11,10 @@ jobs:
       # Checkout the repository (default branch)
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # Make Gradle wrapper executable
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
 
       # Set up JDK
       - name: Set up JDK
