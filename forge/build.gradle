@@ -100,7 +100,7 @@ publishing {
     repositories {
         maven {
             name = "CloudflareR2"
-            url = "https://mosaicmodding-maven.juliusabels.workers.dev"
+            url = "https://maven.mosaicmodding.com"
 
             credentials(HttpHeaderCredentials) {
                 name = "X-Custom-Auth-Key"
