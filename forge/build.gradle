@@ -89,7 +89,7 @@ jar.finalizedBy('reobfJar')
 
 publishing {
     publications {
-        mavenFabric(MavenPublication) {
+        mavenForge(MavenPublication) {
             artifactId project.minecraft_version + "-forge"
             version project.mod_version
             from components.java
