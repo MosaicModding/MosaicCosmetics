@@ -93,6 +93,7 @@ publishing {
             artifactId project.minecraft_version + "-forge"
             version project.mod_version
             from components.java
+            fg.component(it)
         }
     }
     repositories {
