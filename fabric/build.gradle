@@ -59,10 +59,10 @@ processResources {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifactId base.archivesName.get() + "-" + project.minecraft_version + "-fabric"
+        mavenFabric(MavenPublication) {
+            artifactId project.minecraft_version + "-fabric"
             version project.mod_version
-            artifact tasks.jar
+            from components.java
         }
     }
     repositories {
