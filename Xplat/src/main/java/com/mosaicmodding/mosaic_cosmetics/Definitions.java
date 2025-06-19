@@ -13,11 +13,10 @@ public class Definitions {
     );
     public static final Set<Map<List<String>, String>> CONTRIBUTORS = Set.of(
             Map.of(List.of("sullysmod"), "a69fc0f5-028a-4bee-9102-26ff3764017e"), //Sully alt
-            Map.of(List.of("sullysmod", "painters_inc"), "456e2ae6-74b3-474a-9560-92b782bce747"), //Graus
             Map.of(List.of("sullysmod"), "2d173722-de6b-4bb8-b21b-b2843cfe395d"), //Ninni
             Map.of(List.of("sullysmod", "painters_inc"), "7d43a0a0-f228-4382-9d0e-24b96f92ce39"), //Shable
             Map.of(List.of("sullysmod", "painters_inc"), "b2e40db2-5aa8-435a-9c30-8f79efffaba6"), //Angery
-            Map.of(List.of("sullysmod", "painters_inc"), "82d459b2-d085-4991-997f-6f210228e527"), //Farcr
+            Map.of(List.of("sullysmod", "painters_inc"), "82d459b2-d085-4991-997f-6f210228e527"), //Farcr 2nd acc
             Map.of(List.of("sullysmod", "painters_inc"), "852646ab-620d-48f7-974c-6451100f70f0"), //ibrokemyribcage
             Map.of(List.of("sullysmod"), "4d659277-fbcc-4fd8-9e80-c8e4c73d10b5 "), //sullys cousin
             Map.of(List.of("sullysmod"), "ce9dd341-b1c2-44d9-a014-71e11d163b01"), //LudoCrypt
@@ -32,13 +31,14 @@ public class Definitions {
             Map.of(List.of("painters_inc"), "48686524-8a05-4285-a74b-5e8292816b44"), //mshrum
             Map.of(List.of("painters_inc"), "9670aa64-b647-48ab-912c-4520ca6a28f4"), //Throir
             Map.of(List.of("painters_inc"), "4c544c23-8ca9-43ac-9676-352c5c3360af"), //Jolene
-            Map.of(List.of("painters_inc"), "ad07a45a-1c53-4b4b-8311-477d72926288"), //SirBaconFace
-            Map.of(List.of("painters_inc"), "277a737a-46c2-4bcc-aea9-7016215c6ef1"), //CodenamedSuper
+            Map.of(List.of("painters_inc", "sullysmod"), "ad07a45a-1c53-4b4b-8311-477d72926288"), //SirBaconFace
+            Map.of(List.of("painters_inc", "sullysmod"), "277a737a-46c2-4bcc-aea9-7016215c6ef1"), //CodenamedSuper
             Map.of(List.of("painters_inc"), "3186d0b6-8633-46a1-a429-603d4f0ffe7a"), //Dead Comedian
             Map.of(List.of("painters_inc"), "529ac84b-3289-41e9-a83c-af903fd8f937"), //JadenXgamer
             Map.of(List.of("painters_inc"), "1cedf927-5c8f-4650-95e9-808fc8f94d00"), //Yirmiri
             Map.of(List.of("painters_inc"), "b94fb95a-3589-44df-b1c3-7937456b4bd0"), //cf28
-            Map.of(List.of("painters_inc"), "7e76e9e2-4080-4845-a025-380422c5afe2") //The Caretaker
-
+            Map.of(List.of("painters_inc"), "7e76e9e2-4080-4845-a025-380422c5afe2"), //The Caretaker
+            Map.of(List.of("painters_inc", "sullysmod"), "a5b845d8-4311-424f-8132-52ecc8652c5c"), //RealSpidey
+            Map.of(List.of("sullysmod"), "6ae63191-e69f-4d84-a3c5-3134e09d70f1") //MrStone
     );
 }
