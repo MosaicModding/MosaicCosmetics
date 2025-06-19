@@ -60,8 +60,9 @@ processResources {
 publishing {
     publications {
         mavenFabric(MavenPublication) {
-            artifactId project.minecraft_version + "-fabric"
-            version project.mod_version
+            group "com.mosaicmodding"
+            artifactId project.mod_id
+            version project.mod_version + "-fabric"
             from components.java
         }
     }
