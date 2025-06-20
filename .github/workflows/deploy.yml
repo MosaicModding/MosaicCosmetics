@@ -33,14 +33,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Calculate artifact names
+        id: calculate_artifact_names
+        run: |
+          MC=$(awk -F '=' '/minecraft_version/ { print $2; }' gradle.properties)
+          VERSION=$(awk -F '=' '/mod_version/ { print $2; }' gradle.properties)
+          echo "forge=forge/build/libs/MosaicCosmetics-${MC}-${VERSION}-forge.jar" >> "$GITHUB_OUTPUT"
+          echo "fabric=Fabric/build/libs/MosaicCosmetics-${MC}-${VERSION}-fabric.jar" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release and Upload Artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: |
+            ${{ steps.calculate_artifact_names.outputs.fabric }}
+            ${{ steps.calculate_artifact_names.outputs.forge }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       # Set up environment variables
       - name: Set environment variables
         run: echo "AUTH_KEY_SECRET=${{ secrets.AUTH_KEY_SECRET }}" >> $GITHUB_ENV
 
-      # Build and publish Forge
+      # Build and publish Forge to maven
       - name: Build and publish Forge
         run: ./gradlew :forge:publish
 
-      # Build and publish Fabric
+      # Build and publish Fabric to maven
       - name: Build and publish Fabric
         run: ./gradlew :fabric:publish
