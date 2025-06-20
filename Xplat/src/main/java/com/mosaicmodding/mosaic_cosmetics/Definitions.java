@@ -39,6 +39,7 @@ public class Definitions {
             Map.of(List.of("painters_inc"), "b94fb95a-3589-44df-b1c3-7937456b4bd0"), //cf28
             Map.of(List.of("painters_inc"), "7e76e9e2-4080-4845-a025-380422c5afe2"), //The Caretaker
             Map.of(List.of("painters_inc", "sullysmod"), "a5b845d8-4311-424f-8132-52ecc8652c5c"), //RealSpidey
-            Map.of(List.of("sullysmod"), "6ae63191-e69f-4d84-a3c5-3134e09d70f1") //MrStone
+            Map.of(List.of("sullysmod"), "6ae63191-e69f-4d84-a3c5-3134e09d70f1"), //MrStone
+            Map.of(List.of("painters_inc"), "eb51033e-0abe-43a8-936b-47b50c039d55") //Beez
     );
 }

@@ -2,13 +2,12 @@ name: Deploy to Maven
 
 # to automate this further we could later automatically increase the mod version perhaps
 
-on:
-  workflow_dispatch:
+on: push
 
 jobs:
   build-and-deploy:
+    if: startsWith(github.ref, 'refs/tags/') #only run if the commit pushes a tag
     runs-on: ubuntu-latest
-
     steps:
       # Checkout the repository (default branch)
       - name: Checkout code
