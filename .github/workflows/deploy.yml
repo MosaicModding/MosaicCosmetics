@@ -4,6 +4,9 @@ name: Deploy to Maven
 
 on: push
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     if: startsWith(github.ref, 'refs/tags/') #only run if the commit pushes a tag
@@ -33,14 +36,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Build mod files
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # Get path of mod files
       - name: Calculate artifact names
         id: calculate_artifact_names
         run: |
           MC=$(awk -F '=' '/mc_version/ { print $2; }' gradle.properties)
           VERSION=$(awk -F '=' '/mod_version/ { print $2; }' gradle.properties)
           echo "forge=forge/build/libs/MosaicCosmetics-${MC}-${VERSION}-forge.jar" >> "$GITHUB_OUTPUT"
-          echo "fabric=Fabric/build/libs/MosaicCosmetics-${MC}-${VERSION}-fabric.jar" >> "$GITHUB_OUTPUT"
+          echo "fabric=fabric/build/libs/MosaicCosmetics-${MC}-${VERSION}-fabric.jar" >> "$GITHUB_OUTPUT"
 
+      # Release on github
       - name: Create GitHub Release and Upload Artifacts
         uses: softprops/action-gh-release@v2
         with:
