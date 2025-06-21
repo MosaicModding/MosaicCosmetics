@@ -24,7 +24,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 17
+          java-version: 21
           distribution: temurin
 
       # Cache Gradle dependencies
@@ -46,7 +46,7 @@ jobs:
         run: |
           MC=$(awk -F '=' '/mc_version/ { print $2; }' gradle.properties)
           VERSION=$(awk -F '=' '/mod_version/ { print $2; }' gradle.properties)
-          echo "forge=forge/build/libs/MosaicCosmetics-${MC}-${VERSION}-forge.jar" >> "$GITHUB_OUTPUT"
+          echo "neoforge=neoforge/build/libs/MosaicCosmetics-${MC}-${VERSION}-neoforge.jar" >> "$GITHUB_OUTPUT"
           echo "fabric=fabric/build/libs/MosaicCosmetics-${MC}-${VERSION}-fabric.jar" >> "$GITHUB_OUTPUT"
 
       # Release on github
@@ -56,7 +56,7 @@ jobs:
           tag_name: ${{ github.ref_name }}
           files: |
             ${{ steps.calculate_artifact_names.outputs.fabric }}
-            ${{ steps.calculate_artifact_names.outputs.forge }}
+            ${{ steps.calculate_artifact_names.outputs.neoforge }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -64,9 +64,9 @@ jobs:
       - name: Set environment variables
         run: echo "AUTH_KEY_SECRET=${{ secrets.AUTH_KEY_SECRET }}" >> $GITHUB_ENV
 
-      # Build and publish Forge to maven
-      - name: Build and publish Forge
-        run: ./gradlew :forge:publish
+      # Build and publish Neoforge to maven
+      - name: Build and publish Neoforge
+        run: ./gradlew :neoforge:publish
 
       # Build and publish Fabric to maven
       - name: Build and publish Fabric

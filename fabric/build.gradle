@@ -1,42 +1,38 @@
 plugins {
-    id 'java'
-    id 'idea'
-    id 'maven-publish'
+    id 'multiloader-loader'
     id 'fabric-loom'
-}
-
-version = "${mc_version}-${mod_version}-fabric"
-
-repositories {
-    maven {
-        name = "Modmuss"
-        url = "https://maven.modmuss50.me/"
-        content {
-            includeGroup "me.zeroeightsix"
-        }
-    }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${mc_version}"
-    mappings loom.layered() {
+    mappings loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.20.1:2023.09.03@zip")
+        parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
     }
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
-    compileOnly project(":Xplat")
 
     modImplementation "me.zeroeightsix:fiber:0.23.0-2"
     include "me.zeroeightsix:fiber:0.23.0-2"
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/mosaic_cosmetics.accesswidener")
-    mixin.defaultRefmapName = "${mod_id}.refmap.json"
-
+    def aw = project(':Xplat').file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
     runs {
+        client {
+            client()
+            setConfigName('Fabric Client')
+        }
+        server {
+            server()
+            setConfigName('Fabric Server')
+        }
         configureEach {
             runDir "../run"
             ideConfigGenerated(true)
@@ -44,22 +40,11 @@ loom {
     }
 }
 
-sourceSets.main.resources.srcDir 'src/generated/resources'
-
-tasks.withType(JavaCompile).configureEach {
-    source(project(":Xplat").sourceSets.main.allSource)
-}
-tasks.named("sourcesJar", Jar) {
-    from(project(":Xplat").sourceSets.main.allSource)
-}
-
-processResources {
-    from project(":Xplat").sourceSets.main.resources
-}
+sourceSets.main.resources { srcDir project(":Xplat").file('src/main/generated/').getAbsolutePath() }
 
 publishing {
     publications {
-        mavenFabric(MavenPublication) {
+        register('mavenJavaFabric', MavenPublication) {
             group "com.mosaicmodding"
             artifactId project.mod_id + "-fabric"
             version project.mod_version

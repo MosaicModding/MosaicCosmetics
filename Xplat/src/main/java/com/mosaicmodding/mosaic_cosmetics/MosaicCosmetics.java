@@ -10,7 +10,7 @@ public class MosaicCosmetics {
     public static ModConfig configAccess;
 
     public static ResourceLocation modPrefix(String id) {
-        return new ResourceLocation(MOD_ID, id);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
     }
 
     public static void init() {

@@ -1,9 +1,9 @@
 package com.mosaicmodding.mosaic_cosmetics;
 
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
 
-public class ForgeService implements ModService {
+public class NeoforgeService implements ModService {
 
     @Override
     public boolean isModLoaded(String modId) {
