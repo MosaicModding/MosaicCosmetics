@@ -7,7 +7,7 @@ We start with 1.0.0 for 1.20.1. Whenever we port to a major mc version like 1.20
 
 ## Release Process
 1. Make sure you have the latest changes on this branch.
-2. Set the correct mod version in the gradle properties.
+2. Set the correct mod version in the gradle properties and commit/push this.
 3. Then run `git tag -a release-<minecraft_version>-<mod_version>`.
 4. Write changelog.
 5. Run `git push origin release-<minecraft_version>-<mod_version>`.
