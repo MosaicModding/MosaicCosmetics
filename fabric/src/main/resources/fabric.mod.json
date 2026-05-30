@@ -16,7 +16,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.mosaic_modding.mosaic_cosmetics.MosaicCosmeticsFabric"
+            "com.mosaicmodding.mosaic_cosmetics.MosaicCosmeticsFabric"
         ]
     },
     "mixins": [
