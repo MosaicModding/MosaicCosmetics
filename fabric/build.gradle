@@ -44,7 +44,7 @@ sourceSets.main.resources { srcDir project(":Xplat").file('src/main/generated/')
 
 publishing {
     publications {
-        register('mavenJavaFabric', MavenPublication) {
+        maven(MavenPublication) {
             group "com.mosaicmodding"
             artifactId project.mod_id + "-fabric"
             version project.mod_version
