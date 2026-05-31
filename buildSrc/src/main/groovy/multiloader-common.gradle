@@ -103,14 +103,25 @@ processResources {
 
 publishing {
     publications {
-        register('mavenCommon', MavenPublication) {
-            artifactId base.archivesName.get()
+        maven(MavenPublication) {
+            group "com.mosaicmodding"
+            artifactId project.mod_id + '-' + project.name
+            version project.mod_version
             from components.java
         }
     }
     repositories {
         maven {
-            url System.getenv('local_maven_url')
+            name = "Mosaic-Modding-Maven"
+            url = "https://maven.mosaicmodding.com"
+
+            credentials(HttpHeaderCredentials) {
+                name = "X-Custom-Auth-Key"
+                value = System.getenv("AUTH_KEY_SECRET")
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
         }
     }
 }

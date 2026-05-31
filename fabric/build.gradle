@@ -41,28 +41,3 @@ loom {
 }
 
 sourceSets.main.resources { srcDir project(":Xplat").file('src/main/generated/').getAbsolutePath() }
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            group "com.mosaicmodding"
-            artifactId project.mod_id + "-fabric"
-            version project.mod_version
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            name = "Mosaic-Modding-Maven"
-            url = "https://maven.mosaicmodding.com"
-
-            credentials(HttpHeaderCredentials) {
-                name = "X-Custom-Auth-Key"
-                value = System.getenv("AUTH_KEY_SECRET")
-            }
-            authentication {
-                header(HttpHeaderAuthentication)
-            }
-        }
-    }
-}
