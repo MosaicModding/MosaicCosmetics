@@ -6,6 +6,7 @@ import com.mosaicmodding.mosaic_cosmetics.MosaicCosmetics;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,26 +18,34 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(SkinManager.class)
 public class SkinManagerMixin {
+    @Unique
+    private static final ResourceLocation DEV_CAPE = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
+    @Unique
+    private static final ResourceLocation CONTRIBUTOR_CAPE = MosaicCosmetics.modPrefix("textures/entity/contributor_cape.png");
+
 
     @Inject(method = "registerTextures", at = @At("RETURN"), cancellable = true)
     public void mosaicCosmetics$addCapes(UUID uuid, MinecraftProfileTextures textures, CallbackInfoReturnable<CompletableFuture<PlayerSkin>> cir) {
-        if ((mosaicCosmetics$contributorCheck(uuid.toString()) || Definitions.DEV_UUIDS.contains(uuid.toString())) && MosaicCosmetics.configAccess.renderContributorCape()) {
-            ResourceLocation cape = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
+        if (MosaicCosmetics.configAccess.renderContributorCape()) {
             CompletableFuture<PlayerSkin> playerSkinFuture = cir.getReturnValue();
-            cir.setReturnValue(playerSkinFuture.thenApply(playerSkin -> {
-                if (playerSkin.capeTexture() == null)
-                    return new PlayerSkin(playerSkin.texture(), playerSkin.textureUrl(), cape, cape, playerSkin.model(), playerSkin.secure());
-                return playerSkin;
-            }));
-
+            if (Definitions.DEV_UUIDS.contains(uuid.toString()) || MosaicCosmetics.ACCESS.isDevEnvironment()) {
+                cir.setReturnValue(playerSkinFuture.thenApply(s -> mosaicCosmetics$setTexture(s, DEV_CAPE)));
+            }
+            if (mosaicCosmetics$contributorCheck(uuid.toString())) {
+                cir.setReturnValue(playerSkinFuture.thenApply(s -> mosaicCosmetics$setTexture(s, CONTRIBUTOR_CAPE)));
+            }
         }
     }
 
     @Unique
+    private static @NotNull PlayerSkin mosaicCosmetics$setTexture(PlayerSkin playerSkin, ResourceLocation texture) {
+        if (playerSkin.capeTexture() == null)
+            return new PlayerSkin(playerSkin.texture(), playerSkin.textureUrl(), texture, texture, playerSkin.model(), playerSkin.secure());
+        return playerSkin;
+    }
+
+    @Unique
     public boolean mosaicCosmetics$contributorCheck(String uuid) {
-        if (MosaicCosmetics.ACCESS.isDevEnvironment()) {
-            return true;
-        }
         for (Map<List<String>, String> df : Definitions.CONTRIBUTORS) {
             for (String uuid1 : df.values()) {
                 if (uuid1.equals(uuid)) {
