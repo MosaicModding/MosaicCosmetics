@@ -1,6 +1,7 @@
 package com.mosaicmodding.mosaic_cosmetics.mixin;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTextures;
+import com.mosaicmodding.mosaic_cosmetics.CapeHandler;
 import com.mosaicmodding.mosaic_cosmetics.Definitions;
 import com.mosaicmodding.mosaic_cosmetics.MosaicCosmetics;
 import net.minecraft.client.resources.PlayerSkin;
@@ -18,49 +19,9 @@ import java.util.concurrent.CompletableFuture;
 
 @Mixin(SkinManager.class)
 public class SkinManagerMixin {
-    @Unique
-    private static final ResourceLocation DEV_CAPE = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
-    @Unique
-    private static final ResourceLocation CONTRIBUTOR_CAPE = MosaicCosmetics.modPrefix("textures/entity/contributor_cape.png");
-
 
     @Inject(method = "registerTextures", at = @At("RETURN"), cancellable = true)
     public void mosaicCosmetics$addCapes(UUID uuid, MinecraftProfileTextures textures, CallbackInfoReturnable<CompletableFuture<PlayerSkin>> cir) {
-        if (MosaicCosmetics.configAccess.renderContributorCape()) {
-            CompletableFuture<PlayerSkin> playerSkinFuture = cir.getReturnValue();
-            if (Definitions.DEV_UUIDS.contains(uuid.toString()) || MosaicCosmetics.ACCESS.isDevEnvironment()) {
-                cir.setReturnValue(playerSkinFuture.thenApply(s -> mosaicCosmetics$setTexture(s, DEV_CAPE)));
-            }
-            if (mosaicCosmetics$contributorCheck(uuid.toString())) {
-                cir.setReturnValue(playerSkinFuture.thenApply(s -> mosaicCosmetics$setTexture(s, CONTRIBUTOR_CAPE)));
-            }
-        }
-    }
-
-    @Unique
-    private static @NotNull PlayerSkin mosaicCosmetics$setTexture(PlayerSkin playerSkin, ResourceLocation texture) {
-        if (playerSkin.capeTexture() == null)
-            return new PlayerSkin(playerSkin.texture(), playerSkin.textureUrl(), texture, texture, playerSkin.model(), playerSkin.secure());
-        return playerSkin;
-    }
-
-    @Unique
-    public boolean mosaicCosmetics$contributorCheck(String uuid) {
-        for (Map<List<String>, String> df : Definitions.CONTRIBUTORS) {
-            for (String uuid1 : df.values()) {
-                if (uuid1.equals(uuid)) {
-                    for (List<String> modIds : df.keySet()) {
-                        for (String id : modIds) {
-                            if (MosaicCosmetics.ACCESS.isModLoaded(id)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
-            }
-        }
-
-        return false;
+        CapeHandler.addCapes(uuid, cir);
     }
 }
