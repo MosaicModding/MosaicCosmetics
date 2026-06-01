@@ -33,18 +33,12 @@ public class CapeHandler {
     }
 
     private static boolean mosaicCosmetics$contributorCheck(String uuid) {
-        for (Map<List<String>, String> df : Definitions.CONTRIBUTORS) {
-            for (String uuid1 : df.values()) {
-                if (uuid1.equals(uuid)) {
-                    for (List<String> modIds : df.keySet()) {
-                        for (String id : modIds) {
-                            if (MosaicCosmetics.ACCESS.isModLoaded(id)) {
-                                return true;
-                            }
-                        }
-                    }
+        if (Definitions.CONTRIBUTORS.containsKey(uuid)) {
+            String[] mods = Definitions.CONTRIBUTORS.get(uuid);
+            for (String id : mods) {
+                if (MosaicCosmetics.ACCESS.isModLoaded(id)) {
+                    return true;
                 }
-                return false;
             }
         }
         return false;
