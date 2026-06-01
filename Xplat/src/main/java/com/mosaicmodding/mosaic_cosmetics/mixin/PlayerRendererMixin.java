@@ -15,47 +15,47 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.*;
+import java.util.Map;
 
 @Mixin(PlayerRenderer.class)
 public class PlayerRendererMixin {
     @Unique
-    private static final Set<String> mosaicCosmetics$finishedPlayers = Collections.newSetFromMap(new WeakHashMap<>());
+    private static final ResourceLocation DEV_CAPE = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
+    @Unique
+    private static final ResourceLocation CONTRIBUTOR_CAPE = MosaicCosmetics.modPrefix("textures/entity/contributor_cape.png");
 
     @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("TAIL"))
     public void mosaicCosmetics$addCapes(AbstractClientPlayer player, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci) {
+        if (!MosaicCosmetics.configAccess.renderContributorCape()) return;
+
         String uuid = player.getGameProfile().getId().toString();
+        PlayerInfo info = player.playerInfo;
 
-        if (mosaicCosmetics$finishedPlayers.contains(uuid)) return;
+        if (info == null) return;
+        if (!player.isCapeLoaded()) return;
 
-        if ((mosaicCosmetics$contributorCheck(uuid) || Definitions.DEV_UUIDS.contains(uuid)) && MosaicCosmetics.configAccess.renderContributorCape()) {
-            ResourceLocation cape = MosaicCosmetics.modPrefix("textures/entity/dev_cape.png");
-            PlayerInfo info = player.playerInfo;
-            if (info != null) {
-                if (player.isCapeLoaded()) {
-                    Map<MinecraftProfileTexture.Type, ResourceLocation> playerTextures = info.textureLocations;
-                    playerTextures.put(MinecraftProfileTexture.Type.CAPE, cape);
-                    playerTextures.put(MinecraftProfileTexture.Type.ELYTRA, cape);
-                    mosaicCosmetics$finishedPlayers.add(uuid);
-                }
-            }
+        if (Definitions.DEV_UUIDS.contains(uuid)) {
+            mosaicCosmetics$setTexture(info, uuid, DEV_CAPE);
+        } else if (mosaicCosmetics$contributorCheck(uuid)) {
+            mosaicCosmetics$setTexture(info, uuid, CONTRIBUTOR_CAPE);
         }
     }
 
     @Unique
+    private static void mosaicCosmetics$setTexture(PlayerInfo info, String uuid, ResourceLocation rl) {
+        Map<MinecraftProfileTexture.Type, ResourceLocation> playerTextures = info.textureLocations;
+        playerTextures.put(MinecraftProfileTexture.Type.CAPE, rl);
+        playerTextures.put(MinecraftProfileTexture.Type.ELYTRA, rl);
+    }
+
+    @Unique
     public boolean mosaicCosmetics$contributorCheck(String uuid) {
-        for (Map<List<String>, String> df : Definitions.CONTRIBUTORS) {
-            for (String uuid1 : df.values()) {
-                if (uuid1.equals(uuid)) {
-                    for (List<String> modIds : df.keySet()) {
-                        for (String id : modIds) {
-                            if (MosaicCosmetics.ACCESS.isModLoaded(id)) {
-                                return true;
-                            }
-                        }
-                    }
+        if (Definitions.CONTRIBUTORS.containsKey(uuid)) {
+            String[] mods = Definitions.CONTRIBUTORS.get(uuid);
+            for (String id : mods) {
+                if (MosaicCosmetics.ACCESS.isModLoaded(id)) {
+                    return true;
                 }
-                return false;
             }
         }
         return false;
