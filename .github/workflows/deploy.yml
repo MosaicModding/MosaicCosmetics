@@ -46,8 +46,8 @@ jobs:
         run: |
           MC=$(awk -F '=' '/mc_version/ { print $2; }' gradle.properties)
           VERSION=$(awk -F '=' '/mod_version/ { print $2; }' gradle.properties)
-          echo "neoforge=neoforge/build/libs/mosaic_cosmetics-neoforge-${MC}-${VERSION}.jar" >> "$GITHUB_OUTPUT"
-          echo "fabric=fabric/build/libs/mosaic_cosmetics-fabric-${MC}-${VERSION}.jar" >> "$GITHUB_OUTPUT"
+          echo "neoforge=neoforge/build/libs/mosaic_cosmetics-neoforge-${VERSION}-${MC}.jar" >> "$GITHUB_OUTPUT"
+          echo "fabric=fabric/build/libs/mosaic_cosmetics-fabric-${VERSION}-${MC}.jar" >> "$GITHUB_OUTPUT"
 
       # Release on github
       - name: Create GitHub Release and Upload Artifacts

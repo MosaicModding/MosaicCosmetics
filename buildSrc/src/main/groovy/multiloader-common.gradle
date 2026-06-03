@@ -4,7 +4,7 @@ plugins {
 }
 
 base {
-    archivesName = "${mod_id}-${project.name}-${mc_version}-${mod_version}"
+    archivesName = "${mod_id}-${project.name}-${mod_version}-${mc_version}"
 }
 
 java {
@@ -44,7 +44,7 @@ repositories {
 // Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
 ['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
     configurations."$variant".outgoing {
-        capability("$group:$mod_id-${project.name}:${mc_version}-${mod_version}")
+        capability("$group:$mod_id-${project.name}:${mod_version}-${mc_version}")
         capability("$group:${base.archivesName.get()}:$mod_version")
         capability("$group:$mod_id-${project.name}-${mc_version}:$mod_version")
         capability("$group:$mod_id:$mod_version")
@@ -107,7 +107,7 @@ publishing {
         register('mavenJava', MavenPublication) {
             group "com.mosaicmodding"
             artifactId project.mod_id + '-' + project.name
-            version project.mc_version + '-' + project.mod_version
+            version project.mod_version + '-' + project.mc_version
             from components.java
         }
     }
